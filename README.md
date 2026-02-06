@@ -82,8 +82,6 @@ Or in the background (detached):
 docker compose up --build -d
 ```
 
-The latter (detached) may be more stable on some Windows setups.
-
 That’s it. The database schema is created automatically on first run (from `./sql/001_init.sql`).
 
 If `ENABLE_POLLER=true` in `.env`, the poller syncs with steam automatically on startup and then continue polling on an interval.
@@ -217,7 +215,7 @@ curl -X POST http://localhost:3001/debug/seed
 docker compose up --build
 ```
 
-3. Trigger one poll manually:
+3. Trigger one poll manually (should not be needed if `ENABLE_POLLER=true` in `.env`):
 
 ```bash
 curl -X POST http://localhost:3001/debug/steam/poll-once
@@ -226,8 +224,6 @@ curl -X POST http://localhost:3001/debug/steam/poll-once
 4. Open the dashboard:
 
 - `http://localhost:3001/`
-
-Note: Steam may return limited data if the profile/game stats are private.
 
 ---
 
