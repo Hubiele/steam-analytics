@@ -88,6 +88,10 @@ If `ENABLE_POLLER=true` in `.env`, the poller syncs with steam automatically on 
 
 If `ENABLE_POLLER=false`, you must trigger sync/poll manually to update the database.
 
+Open the dashboard:
+
+http://localhost:3001/
+
 ---
 
 ## Environment variables
