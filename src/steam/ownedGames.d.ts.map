@@ -1,0 +1,1 @@
+{"version":3,"file":"ownedGames.d.ts","sourceRoot":"","sources":["ownedGames.ts"],"names":[],"mappings":"AAAA;;GAEG;AAEH,KAAK,SAAS,GAAG;IACf,KAAK,EAAE,MAAM,CAAC;IACd,IAAI,CAAC,EAAE,MAAM,CAAC;IACd,gBAAgB,CAAC,EAAE,MAAM,CAAC;CAC3B,CAAC;AAeF,wBAAsB,aAAa,yBAoBlC"}

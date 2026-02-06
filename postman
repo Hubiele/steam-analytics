@@ -1,0 +1,173 @@
+{
+  "info": {
+    "name": "Steam Analytics API",
+    "_postman_id": "steam-analytics-collection",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Health",
+      "request": {
+        "method": "GET",
+        "url": "{{baseUrl}}/health"
+      }
+    },
+    {
+      "name": "DB Health",
+      "request": {
+        "method": "GET",
+        "url": "{{baseUrl}}/db/health"
+      }
+    },
+    {
+      "name": "Dashboard (HTML)",
+      "request": {
+        "method": "GET",
+        "url": "{{baseUrl}}/"
+      }
+    },
+    {
+      "name": "Steam: Owned games",
+      "request": {
+        "method": "GET",
+        "url": "{{baseUrl}}/steam/owned-games"
+      }
+    },
+    {
+      "name": "Dashboard: Summary",
+      "request": {
+        "method": "GET",
+        "url": "{{baseUrl}}/dashboard/summary"
+      }
+    },
+    {
+      "name": "Dashboard: Achievements by weekday",
+      "request": {
+        "method": "GET",
+        "url": "{{baseUrl}}/dashboard/achievements-by-weekday"
+      }
+    },
+    {
+      "name": "Dashboard: Unlocks by day",
+      "request": {
+        "method": "GET",
+        "url": "{{baseUrl}}/dashboard/unlocks-by-day?days=30"
+      }
+    },
+    {
+      "name": "Dashboard: Cumulative achievements by month",
+      "request": {
+        "method": "GET",
+        "url": "{{baseUrl}}/dashboard/cumulative-achievements-by-month?months=120"
+      }
+    },
+    {
+      "name": "Dashboard: Games unlocks",
+      "request": {
+        "method": "GET",
+        "url": "{{baseUrl}}/dashboard/games-unlocks?limit=20"
+      }
+    },
+    {
+      "name": "Dashboard: Games progress",
+      "request": {
+        "method": "GET",
+        "url": "{{baseUrl}}/dashboard/games-progress?limit=20"
+      }
+    },
+    {
+      "name": "Dashboard: Top games",
+      "request": {
+        "method": "GET",
+        "url": "{{baseUrl}}/dashboard/top-games?limit=10"
+      }
+    },
+    {
+      "name": "Dashboard: Recent achievements",
+      "request": {
+        "method": "GET",
+        "url": "{{baseUrl}}/dashboard/recent-achievements?limit=20"
+      }
+    },
+    {
+      "name": "Webhooks: Register target",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "content-type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"url\": \"http://localhost:3001/debug/receiver\"\n}"
+        },
+        "url": "{{baseUrl}}/webhooks"
+      }
+    },
+    {
+      "name": "Debug (requires ENABLE_DEBUG_ROUTES=true)",
+      "item": [
+        {
+          "name": "Debug: Manual sync",
+          "request": {
+            "method": "POST",
+            "url": "{{baseUrl}}/debug/steam/sync"
+          }
+        },
+        {
+          "name": "Debug: Poll once (sync + send webhooks for new achievements)",
+          "request": {
+            "method": "POST",
+            "url": "{{baseUrl}}/debug/steam/poll-once"
+          }
+        },
+        {
+          "name": "Debug: Steam achievements for appId",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/debug/steam/achievements?appId=440"
+          }
+        },
+        {
+          "name": "Debug: Owned games (alias)",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/debug/steam/owned-games"
+          }
+        },
+        {
+          "name": "Debug: Seed event (end-to-end webhook test)",
+          "request": {
+            "method": "POST",
+            "url": "{{baseUrl}}/debug/seed"
+          }
+        },
+        {
+          "name": "Debug: Webhook receiver (sample request)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "content-type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"type\": \"achievement_unlocked\",\n  \"steamUserId\": \"demo-user\",\n  \"appId\": 440,\n  \"achievementKey\": \"FIRST_WIN\",\n  \"achievementName\": \"First Win\",\n  \"achievedAt\": \"2026-01-01T00:00:00.000Z\"\n}"
+            },
+            "url": "{{baseUrl}}/debug/receiver"
+          }
+        }
+      ]
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:3001"
+    }
+  ]
+}

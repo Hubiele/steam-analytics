@@ -1,0 +1,47 @@
+services:
+  db:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-steam}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-steam}
+      POSTGRES_DB: ${POSTGRES_DB:-steam_analytics}
+    ports:
+      - "${POSTGRES_PORT:-5433}:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+      - ./sql:/docker-entrypoint-initdb.d:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $$POSTGRES_USER -d $$POSTGRES_DB"]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+
+  api:
+    build: .
+    depends_on:
+      db:
+        condition: service_healthy
+    ports:
+      - "${PORT:-3001}:3001"
+    environment:
+      # API
+      PORT: 3001
+
+      # DB: inside compose the host is "db" and port 5432
+      DATABASE_URL: postgresql://steam:steam@db:5432/steam_analytics
+
+      # Steam (loaded from .env in project root by docker compose)
+      STEAM_API_KEY: ${STEAM_API_KEY}
+      STEAM_STEAMID64: ${STEAM_STEAMID64}
+
+      # Poller (optional)
+      ENABLE_POLLER: ${ENABLE_POLLER:-true}
+      POLL_INTERVAL_SECONDS: ${POLL_INTERVAL_SECONDS:-60}
+      STEAM_MAX_GAMES: ${STEAM_MAX_GAMES:-0}
+      MAX_NEW_EVENTS_RETURNED: ${MAX_NEW_EVENTS_RETURNED:-50}
+
+      # Debug routes
+      ENABLE_DEBUG_ROUTES: ${ENABLE_DEBUG_ROUTES:-true}
+
+volumes:
+  pgdata:
